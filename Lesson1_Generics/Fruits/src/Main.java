@@ -22,13 +22,13 @@ public class Main {
         System.out.println("Capacity of " + orangeBox1.getName() + " is " + orangeBox1.getNumberFruits());
         System.out.println("Capacity of " + orangeBox2.getName() + " is " + orangeBox2.getNumberFruits() + "\n");
 
-        System.out.println("Weight of the " + appleBox1.getName() + " is " + appleBox1.getBoxWeight(new Apple()));
-        System.out.println("Weight of the " + orangeBox2.getName() + " is " + orangeBox2.getBoxWeight(new Orange()) + "\n");
+        System.out.println("Weight of the " + appleBox1.getName() + " is " + appleBox1.getBoxWeight());
+        System.out.println("Weight of the " + orangeBox2.getName() + " is " + orangeBox2.getBoxWeight() + "\n");
 
         int takeFruits = 1;
         try {
             appleBox1.takeFruit(takeFruits);
-            appleBox1.printFruitMessage(takeFruits, new Apple());
+            appleBox1.printFruitMessage(takeFruits);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -36,7 +36,7 @@ public class Main {
         takeFruits = 3;
         try {
             orangeBox2.takeFruit(takeFruits);
-            orangeBox2.printFruitMessage(takeFruits, new Orange());
+            orangeBox2.printFruitMessage(takeFruits);
         } catch (Exception e) {
             e.printStackTrace();
         }
