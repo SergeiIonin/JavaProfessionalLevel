@@ -15,8 +15,8 @@ public class Box<T extends Fruit> {
     }
 
     public static void compare(Box box1, Box box2) {
-        float weight1 = box1.getBoxWeight(box1.getFruitType());
-        float weight2 = box2.getBoxWeight(box2.getFruitType());
+        float weight1 = box1.getBoxWeight();
+        float weight2 = box2.getBoxWeight();
 
         if (weight1 > weight2)
             System.out.println(box1.getName() + " is on " + (weight1 - weight2) + " heavier");
@@ -26,8 +26,8 @@ public class Box<T extends Fruit> {
             System.out.println(box2.getName() + " is on " + (weight2 - weight1) + " heavier");
     }
 
-    public float getBoxWeight(T fruit) {
-        return box.size() * fruit.getWeight();
+    public float getBoxWeight() {
+        return box.size() * this.fruit.getWeight();
     }
 
     public void takeFruit(int howMuchFruits) {
@@ -57,10 +57,10 @@ public class Box<T extends Fruit> {
         } else throw new IllegalArgumentException();
     }
 
-    public void printFruitMessage(int number, T fruit) {
+    public void printFruitMessage(int number) {
         System.out.println("After taking " + number + " " + this.getType() + "s from " + this.getName() +
                 " the number of " + this.getType() + "s there becomes " + this.getNumberFruits() +
-                " and the weight is " + this.getBoxWeight(fruit));
+                " and the weight is " + this.getBoxWeight());
     }
 
     public String getType() {
