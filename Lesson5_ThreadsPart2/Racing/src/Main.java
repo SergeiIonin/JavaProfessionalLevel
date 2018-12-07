@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Distance distance = new Distance(3, 2, 4, 2);
+        Distance distance = new Distance(3000, 2000, 4000, 2);
         final int CARS_COUNT = 5;
 
         final CountDownLatch countDownLatch = new CountDownLatch(CARS_COUNT);
@@ -31,7 +31,6 @@ class Distance {
     private int sT; // distance in the tunnel in km
     private int s2; // distance after tunnel in km
     private boolean winner;
-
     private int carsInTunnel;
 
     public Distance(int s1, int sT, int s2, int carsInTunnel) {
@@ -67,8 +66,6 @@ class Distance {
     }
 }
 
-
-
 class Car extends Thread {
 
     private int id;
@@ -76,7 +73,6 @@ class Car extends Thread {
     Semaphore semaphore;
     Thread thread;
     Distance distance;
-
     int speed;
     int prepareTime;
     Random rand = new Random();
@@ -102,11 +98,14 @@ class Car extends Thread {
                 System.out.printf("Car #%d drove the tunnel \n", id);
                 semaphore.release();
                 Thread.sleep(distance.get_S2() / speed);
-                if (!distance.isWinner()) {
-                    System.out.printf("distance.isWinner() = " + (distance.isWinner()) + " Car #%d is a winner! \n", id);
-                    distance.setWinner();
+                synchronized (distance) {
+                    if (!distance.isWinner()) {
+                        System.out.printf("Car #%d is a winner! \n", id);
+                        distance.setWinner();
+                    } else {
+                        System.out.printf("Car #%d finished \n", id);
+                    }
                 }
-                else System.out.printf("distance.isWinner() = "+(distance.isWinner())+" Car #%d finished \n", id);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -114,4 +113,3 @@ class Car extends Thread {
         thread.start();
     }
 }
-
