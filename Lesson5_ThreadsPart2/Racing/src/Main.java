@@ -3,36 +3,28 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 
 public class Main {
-
     public static void main(String[] args) {
-
         Distance distance = new Distance(3000, 2000, 4000, 2);
         final int CARS_COUNT = 5;
-
         final CountDownLatch countDownLatch = new CountDownLatch(CARS_COUNT);
         final Semaphore semaphore = new Semaphore(distance.getCarsInTunnel());
-
         for (int i = 0; i < CARS_COUNT; i++) {
             new Car(i,countDownLatch,semaphore,distance);
         }
-
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
 }
 
 class Distance {
-
-    private int s1; // distance before tunnel in km
-    private int sT; // distance in the tunnel in km
-    private int s2; // distance after tunnel in km
+    private int s1; // distance before tunnel in m
+    private int sT; // distance in the tunnel in m
+    private int s2; // distance after tunnel in m
     private boolean winner;
     private int carsInTunnel;
-
     public Distance(int s1, int sT, int s2, int carsInTunnel) {
         this.s1 = s1;
         this.sT = sT;
@@ -40,43 +32,35 @@ class Distance {
         this.carsInTunnel = carsInTunnel;
         this.winner = false;
     }
-
     public int get_s1() {
         return s1;
     }
-
     public int get_sT() {
         return sT;
     }
-
     public int get_S2() {
         return s2;
     }
-
     public int getCarsInTunnel() {
         return carsInTunnel;
     }
-
     public boolean isWinner() {
         return winner;
     }
-
     public void setWinner() {
         this.winner = true;
     }
 }
 
 class Car extends Thread {
-
     private int id;
     CountDownLatch countDownLatch;
     Semaphore semaphore;
     Thread thread;
     Distance distance;
-    int speed;
-    int prepareTime;
+    private int speed;
+    private int prepareTime;
     Random rand = new Random();
-
     public Car(int id, CountDownLatch countDownLatch, Semaphore semaphore, Distance distance) {
         this.id = id;
         this.countDownLatch = countDownLatch;
