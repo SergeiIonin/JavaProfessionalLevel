@@ -7,15 +7,14 @@ public class ArrayTransformer {
     List<Integer> list;
     Integer[] transArray;
 
-    public ArrayTransformer(Integer... args) {
+    public Integer[] transform(Integer... args) {
+
         this.array = new Integer[args.length];
         for (int i = 0; i < args.length; i++) {
             this.array[i] = args[i];
         }
         this.list= Arrays.asList(this.array);
-    }
 
-    public Integer[] transform() {
         boolean contains = this.list.contains(4);
         if (contains){
             int index = this.list.lastIndexOf(4);
