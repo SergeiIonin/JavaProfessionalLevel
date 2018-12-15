@@ -1,4 +1,5 @@
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -7,13 +8,32 @@ import java.util.HashMap;
 
 public class TestHandler {
 
-    public static void start(TestClass testClass) {
+    public static void start(String className) {
 
-        Method[] methods = TestClass.class.getDeclaredMethods();
+        Class<?> clazz = null;
+        Object obj = null;
+        try {
+            clazz = Class.forName(className);
+            Constructor<?> ctor = clazz.getConstructor();
+            obj = ctor.newInstance();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+
+        Method[] methods = clazz.getDeclaredMethods();
         Annotation[] anno;
 
-        HashMap<String, Method> methodHashMap = new HashMap<>(); // for methods that are used once
-        ArrayList<Method> methodsArrayList = new ArrayList<>(); // for @Test methods
+        HashMap<String, Method> methodHashMap = new HashMap<>();
+        ArrayList<Method> methodsArrayList = new ArrayList<>();
         ArrayList<Integer> priorityList = new ArrayList<>();
 
         for (int i = 0; i < methods.length; i++) {
@@ -37,11 +57,11 @@ public class TestHandler {
         methodsArrayList = sortByPriority(methodsArrayList, priorityList);
 
         try {
-            methodHashMap.get("@BeforeSuite()").invoke(testClass, null);
+            methodHashMap.get("@BeforeSuite()").invoke(obj, null);
             for (int i = 0; i < methodsArrayList.size(); i++) {
-                methodsArrayList.get(i).invoke(testClass, null);
+                methodsArrayList.get(i).invoke(obj, null);
             }
-            methodHashMap.get("@AfterSuite()").invoke(testClass, null);
+            methodHashMap.get("@AfterSuite()").invoke(obj, null);
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
