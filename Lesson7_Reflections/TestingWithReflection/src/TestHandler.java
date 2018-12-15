@@ -87,7 +87,7 @@ public class TestHandler {
         for (int i = 0; i < priorityList.size(); i++) {
             tempList.add(list.get(order[i]));
         }
-        //list = tempList;    //todo somehow this isn't work!!!
+        //list = tempList;    //todo somehow it doesn't work!!!
         ArrayList<Method> finalList = tempList;
         priorityList.sort(comparator);
         return finalList;
