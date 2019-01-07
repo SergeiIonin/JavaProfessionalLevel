@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        .row.content {
+            height: 450px
+        }
+
+        #employee-table {
+            width: 300px;
+            height: 30px;
+            padding: 10px;
+        }
+
+        .panel-body {
+            padding: 0px;
+            font-size: x-large;
+        }
+
+        .well {
+            width: 650px;
+        }
+
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+        @media screen and (max-width: 767px) {
+            .row.content {
+                height: auto;
+            }
+        }
+    </style>
+    <title>Main page</title>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/blog">List of employees</a></li>
+                <li><a href="/blog/addition">Add new employee</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--Can't add this:-->
+<!--<nav class="navbar navbar-light bg-light">
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>-->
+
+<br/>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-8 text-left">
+            <div>
+                <div class="well">
+                    <div class="panel-body">
+                        <h3><p>Hi. This is the list of guys you have to pay the dough =)</p>
+                            You can add more or remove any
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div th:each="employee : ${employees}">
+
+                <table cellspacing="0" border="1" id="employee-table">
+                    <tr>
+                        <td align="center" width="150"><b>ID</b></td>
+                        <td align="center"><p th:text="${employee.id}"/></td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="150"><b>First name</b></td>
+                        <td align="center"><p th:text="${employee.firstName}"/></td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="150"><b>Second name</b></td>
+                        <td align="center"><p th:text="${employee.secondName}"/></td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="150"><b>Salary</b></td>
+                        <td align="center"><p th:text="${employee.salary}"/></td>
+                    </tr>
+                </table>
+
+                <p></p>
+                <a th:href="@{/blog/delete/} + ${employee.id}">
+                    <img border="0" src="img/remove-icon.png" width="30" height="30"/>
+                </a>
+
+                <hr/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

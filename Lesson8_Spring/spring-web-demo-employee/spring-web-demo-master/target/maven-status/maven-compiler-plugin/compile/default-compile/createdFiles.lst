@@ -1,0 +1,6 @@
+com\senin26\service\EmployeeService.class
+com\senin26\dao\EmployeeRepository.class
+com\senin26\ApplicationLauncher.class
+com\senin26\controller\MainController.class
+com\senin26\configuration\WebConfig.class
+com\senin26\model\Employee.class
